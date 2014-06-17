@@ -1,0 +1,13 @@
+html {
+  font-size: 62.5%;
+}
+
+#sudokuContainer table {
+  border-collapse: collapse;
+}
+
+#sudokuContainer td {
+  width: 1rem;
+  height: 1rem;
+  border: 1px solid #ccc;
+}
