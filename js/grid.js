@@ -10,7 +10,13 @@ var grid = (function() {
     // Length of one of the small squares within the grid. A 9x9 grid will contain nine 3x3 squares, so its length is 3.
     var smallSquareLength = 3;
 
-    // Generate grid array and DOM objects.
+    var getSmallSquareLength = function() {
+        return smallSquareLength;
+    };
+
+
+
+    // >> Generate grid array and DOM objects. Happens once, when the page is loaded.
 
     var gridArray = [];
 
@@ -73,4 +79,59 @@ var grid = (function() {
         }
 
     }
+
+    // >> End grid generation.
+
+
+
+    // >> Assign values to the grid squares at the start of every new game.
+
+    // Backtrack algorithm. A grid square's value is a dead end if the next square cannot select a valid value.
+    // In this case, generate a new value for the previous grid square.
+    // A grid square returns 'false' if it cannot assign itself a value, and the previous square must have its value changed.
+    // Backtrack example, showing the top two rows:
+    // 1 2 3  4 5 6  7 8 9
+    // 6 5 4  3 2 1  . . .
+    // Here, the next square cannot be assigned a value, as the values 7, 8 and 9 are within the same small square.
+    // The square with the value '1' needs to have its value regenerated, as the value '1' is a dead end here.
+    // Values 7, 8 and 9 will be tried in that position, but ultimately several squares before it will need to be backtracked.
+    var generateValues = function() {
+
+        for (var rowIndex = 0, rLength = gridArray.length; rowIndex < rLength; rowIndex++) {
+
+            console.log('generating values for row ' + rowIndex);
+
+            for (var colIndex = 0, cLength = gridArray[rowIndex].length; colIndex < cLength; colIndex++ ) {
+
+                console.log('generating values for column ' + colIndex);
+
+                // Set actualValue, and store the return value.
+                var whetherValueAssigned = gridArray[rowIndex][colIndex].setActualValue();
+
+                // Backtrack if needed.
+                if (whetherValueAssigned === false) {
+                    if (colIndex !== 0) {
+                        // If the current square is not at the end of its row, jump back to the previous square.
+                        colIndex = colIndex - 2;
+                    } else {
+                        // Else, jump back to the last square on the previous row.
+                        colIndex = gridArray[rowIndex].length-1;
+                        rowIndex = rowIndex - 2;
+                        break;
+                    }
+                }
+            }
+        }
+    };
+
+
+    var newGame = function() {
+        generateValues();
+    };
+
+    return {
+        getSmallSquareLength: getSmallSquareLength,
+        newGame: newGame,
+    };
+
 }());
