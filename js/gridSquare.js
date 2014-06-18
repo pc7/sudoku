@@ -2,7 +2,7 @@
  * Generates a grid square object, and an associated DOM td object. The DOM object is appended to the argument tr object.
  */
 
-var createGridSquare = function(trObject, testSquareId /* ### remove test id */) {
+var createGridSquare = function(trObject) {
 
     "use strict";
 
@@ -17,13 +17,6 @@ var createGridSquare = function(trObject, testSquareId /* ### remove test id */)
     tdObject.appendChild(selectMenuObject);
     trObject.appendChild(tdObject);
 
-    // ### Remove this.
-    var testSpanObject = document.createElement('span');
-    tdObject.appendChild(testSpanObject);
-    testSpanObject.textContent = testSquareId;
-    var testSquareId = testSquareId;
-
-
     // Arrays of grid squares that share the same row, column or small square as this square, duplicates removed.
     // Should be 20 squares in total. Will not change once created.
     var sharedSquares;
@@ -36,7 +29,6 @@ var createGridSquare = function(trObject, testSquareId /* ### remove test id */)
 
     return {
         setSharedSquares: setSharedSquares,
-        testSquareId: testSquareId,
     };
 
 };
