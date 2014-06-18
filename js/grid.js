@@ -99,11 +99,7 @@ var grid = (function() {
 
         for (var rowIndex = 0, rLength = gridArray.length; rowIndex < rLength; rowIndex++) {
 
-            console.log('generating values for row ' + rowIndex);
-
             for (var colIndex = 0, cLength = gridArray[rowIndex].length; colIndex < cLength; colIndex++ ) {
-
-                console.log('generating values for column ' + colIndex);
 
                 // Set actualValue, and store the return value.
                 var whetherValueAssigned = gridArray[rowIndex][colIndex].setActualValue();
