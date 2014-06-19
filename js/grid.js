@@ -14,8 +14,10 @@ var grid = (function() {
         return smallSquareLength;
     };
 
+    var getSideLength = function() { return Math.pow(smallSquareLength, 2) };
+
     // Number of squares which have their actualValues revealed at the start of the game.
-    var numberOfRevealedValues = 30;
+    var numberOfRevealedValues = 76;
 
 
 
@@ -47,7 +49,7 @@ var grid = (function() {
 
 
     // Get shiared squares for each grid square, once all grid squares generated.
-    for (var rowNum = 0, fullSideLength = Math.pow(smallSquareLength, 2); rowNum < fullSideLength; rowNum++) {
+    for (var rowNum = 0, fullSideLength = getSideLength(); rowNum < fullSideLength; rowNum++) {
 
         for (var colNum = 0; colNum < fullSideLength; colNum++) {
 
@@ -126,28 +128,62 @@ var grid = (function() {
     // >> End assign values to squares.
 
 
-    // Set random squares to have their actualValues revealed at the start of a game, once all values are generated.
-    var setRevealedSquares = function() {
-        var randomInt = function(limit) { return Math.floor(Math.random() * limit); };
-        for (var i = 0; i < numberOfRevealedValues; i++) {
-            gridArray[randomInt(gridArray.length)][randomInt(gridArray[0].length)].setAsRevealed();
-        }
+    // Invokes callback for each grid square, with the square as an argument to the callback.
+    var allSquares = function(callback) {
+        gridArray.forEach( function(el) {
+            el.forEach( function(el) { callback(el); } );
+        } );
     };
 
+    // Set random squares to have their actualValues revealed at the start of a game, once all values are generated.
+    var setRevealedSquares = function() {
+        var revealedSquares = 0;
+        while (revealedSquares < numberOfRevealedValues) {
+            var randomSquare = gridArray[utils.randomInt(gridArray.length)][utils.randomInt(gridArray[0].length)];
+            if (!randomSquare.getRevealedStatus()) {
+                randomSquare.setAsRevealed();
+                revealedSquares++;
+            }
+        }
+    };
 
     // Invoked at the start of a new game. Invokes reset() on every grid square, removing the old values.
     // Then generates new values for the grid squares, and sets random grid squares to be revealed.
     var newGame = function() {
-        gridArray.forEach( function(el) {
-            el.forEach( function(el) { el.reset(); } );
-        } );
+        allSquares( function(el) { el.reset(); } );
         generateValues();
         setRevealedSquares();
+    };
+
+    // Resets the userValue on squares which have a userValue, where the userValue does not equal the actualValue.
+    var removeIncorrectUserValues = function() {
+        allSquares( function(el) {
+            if ( el.hasUserValue() && !el.hasCorrectUserValue() ) {
+                el.setUserValue();
+            }
+        } );
+    };
+
+    // Returns true if game won, ie all userValues equal the actualValues on non-revealed squares.
+    // Can abandon search when incorrect value found, so more efficient to use loops rather than allSquares().
+    var checkForWin = function() {
+        for (var i = 0, sideLength = getSideLength(); i < sideLength; i++ ) {
+            for (var j = 0; j < sideLength; j++) {
+                if (!gridArray[i][j].getRevealedStatus() && !gridArray[i][j].hasCorrectUserValue()) {
+                    console.log('checkForWin() returns false');
+                    return false;
+                }
+            }
+        }
+        console.log('checkForWin() returns true');
+        return true;
     };
 
     return {
         getSmallSquareLength: getSmallSquareLength,
         newGame: newGame,
+        removeIncorrectUserValues: removeIncorrectUserValues,
+        checkForWin: checkForWin, 
     };
 
 }());

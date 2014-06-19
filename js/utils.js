@@ -15,4 +15,7 @@ var utils = {
         } );
     },
 
+    // Returns a random integer between 0 and limit-1. Can be used to select random array elements.
+    randomInt: function(limit) { return Math.floor(Math.random() * limit); },
+
 };

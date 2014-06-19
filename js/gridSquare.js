@@ -26,6 +26,14 @@ var createGridSquare = function(trObject) {
     firstOption.value = '';
     selectMenuObject.appendChild(firstOption);
 
+    // Removes all option elements except the first one, which is the 'no value' option.
+    var removeOptionElements = function() {
+        while (selectMenuObject.children.length > 1) {
+            selectMenuObject.removeChild(selectMenuObject.children[selectMenuObject.children.length-1]);
+        }
+    };
+
+
     // Arrays of grid squares that share the same row, column or small square as this square, duplicates removed.
     // Should be 20 squares in total. Will not change once created.
     var sharedSquares;
@@ -98,7 +106,7 @@ var createGridSquare = function(trObject) {
             }
 
             // Select a new actualValue from the possibleActualValues array.
-            actualValue = possibleActualValues[ Math.floor( Math.random() * possibleActualValues.length ) ];
+            actualValue = possibleActualValues[ utils.randomInt(possibleActualValues.length) ];
 
         };
 
@@ -138,12 +146,16 @@ var createGridSquare = function(trObject) {
 
     var getUserValue = function() { return userValue; };
 
+    var hasUserValue = function() { if (userValue !== null) { return true; } };
+
     // Sets user value and outputs it in the DOM. If falsy, eg empty string or null, resets userValue to null.
     // If userValue is now correct, check for win.
     var setUserValue = function(value) {
         if (!value) {
             userValue = null;
             spanObject.textContent = '';
+            // Also remove option elements, as the selected option will now be incorrect.
+            removeOptionElements();
         } else {
             userValue = Number(value);
             spanObject.textContent = userValue;
@@ -185,10 +197,7 @@ var createGridSquare = function(trObject) {
     // actualValue may be prevented from appearing in the menu until the incorrect value is removed.
     var generateMenuOptions = function() {
 
-        // Remove the previous option elements, except the first 'remove value' option.
-        while (selectMenuObject.children.length > 1) {
-            selectMenuObject.removeChild(selectMenuObject.children[selectMenuObject.children.length-1]);
-        }
+        removeOptionElements();
 
         var fragment = document.createDocumentFragment();
 
@@ -223,6 +232,9 @@ var createGridSquare = function(trObject) {
         getRevealedStatus: getRevealedStatus,
         setAsRevealed: setAsRevealed,
         getUserValue: getUserValue,
+        setUserValue: setUserValue,
+        hasUserValue: hasUserValue,
+        hasCorrectUserValue: hasCorrectUserValue, 
         reset: reset,
     };
 
