@@ -31,3 +31,7 @@ html {
 #sudokuContainer tr:nth-of-type(1) {
   border-top: 2px solid #000;
 }
+
+#sudokuContainer td.revealed {
+
+}

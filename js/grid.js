@@ -102,7 +102,7 @@ var grid = (function() {
             for (var colIndex = 0, cLength = gridArray[rowIndex].length; colIndex < cLength; colIndex++ ) {
 
                 // Set actualValue, and store the return value.
-                var whetherValueAssigned = gridArray[rowIndex][colIndex].setActualValue();
+                var whetherValueAssigned = gridArray[rowIndex][colIndex].selectActualValue();
 
                 // Backtrack if needed.
                 if (whetherValueAssigned === false) {
