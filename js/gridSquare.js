@@ -119,6 +119,7 @@ var createGridSquare = function(trObject) {
     var setAsRevealed = function() {
         isRevealedValue = true;
         tdObject.classList.add('revealed');
+        spanObject.textContent = actualValue;
     };
 
     // >> End revealed square.
@@ -209,6 +210,12 @@ var createGridSquare = function(trObject) {
     // >> End user value.
 
 
+    // Reset values before the start of a new game, as generating new values needs old ones to be removed first.
+    var reset = function() {
+        actualValue = userValue = null;
+        isRevealedValue = false;
+    };
+
     return {
         setSharedSquares: setSharedSquares,
         getActualValue: getActualValue,
@@ -216,6 +223,7 @@ var createGridSquare = function(trObject) {
         getRevealedStatus: getRevealedStatus,
         setAsRevealed: setAsRevealed,
         getUserValue: getUserValue,
+        reset: reset,
     };
 
 

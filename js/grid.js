@@ -14,6 +14,9 @@ var grid = (function() {
         return smallSquareLength;
     };
 
+    // Number of squares which have their actualValues revealed at the start of the game.
+    var numberOfRevealedValues = 30;
+
 
 
     // >> Generate grid array and DOM objects. Happens once, when the page is loaded.
@@ -120,9 +123,26 @@ var grid = (function() {
         }
     };
 
+    // >> End assign values to squares.
 
+
+    // Set random squares to have their actualValues revealed at the start of a game, once all values are generated.
+    var setRevealedSquares = function() {
+        var randomInt = function(limit) { return Math.floor(Math.random() * limit); };
+        for (var i = 0; i < numberOfRevealedValues; i++) {
+            gridArray[randomInt(gridArray.length)][randomInt(gridArray[0].length)].setAsRevealed();
+        }
+    };
+
+
+    // Invoked at the start of a new game. Invokes reset() on every grid square, removing the old values.
+    // Then generates new values for the grid squares, and sets random grid squares to be revealed.
     var newGame = function() {
+        gridArray.forEach( function(el) {
+            el.forEach( function(el) { el.reset(); } );
+        } );
         generateValues();
+        setRevealedSquares();
     };
 
     return {
