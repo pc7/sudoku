@@ -10,6 +10,8 @@ html {
   width: 4.5rem;
   height: 4.5rem;
   border: 1px solid #ccc;
+  vertical-align: middle;
+  text-align: center;
 }
 
 #sudokuContainer tr:nth-of-type(3),
@@ -31,29 +33,29 @@ html {
 #sudokuContainer tr:nth-of-type(1) {
   border-top: 2px solid #000;
 }
-/*
-#sudokuContainer td.revealed select,
-#sudokuContainer td:not(.revealed):not(:hover) select {
-  display: none;
-}
-*/
 
 #sudokuContainer select {
   width: 3.5rem;
 }
 
 #sudokuContainer td select,
-.gameWon select {
+#sudokuContainer:not(.gameWon) td:not(.revealed):hover span,
+#sudokuContainer select:focus + span,
+.gameWon #removeIncorrectValuesButton {
   display: none;
 }
 
-#sudokuContainer td:not(.revealed):hover select,
+#sudokuContainer:not(.gameWon) td:not(.revealed):hover select,
 #sudokuContainer td:not(.revealed) select:focus {
   display: inline;
 }
 
 #sudokuContainer:not(.gameWon) #gameWonSpan {
   display: none;
+}
+
+#sudokuContainer td span {
+  font-size: 1.8rem;
 }
 
 .revealed {

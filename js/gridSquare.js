@@ -15,8 +15,8 @@ var createGridSquare = function(trObject) {
         spanObject = document.createElement('span'),
         selectMenuObject = document.createElement('select');
 
-    tdObject.appendChild(spanObject);
     tdObject.appendChild(selectMenuObject);
+    tdObject.appendChild(spanObject);
     trObject.appendChild(tdObject);
 
     // Generate the 'no value' option element that must appear at the start of each menu.
@@ -227,7 +227,6 @@ var createGridSquare = function(trObject) {
 
     // Reset values before the start of a new game, as generating new values needs old ones to be removed first.
     var reset = function() {
-        console.log('reset() invoked');
         actualValue = null;
         userValue = null;
         setAsNotRevealed();

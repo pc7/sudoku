@@ -17,7 +17,8 @@ var grid = (function() {
     var getSideLength = function() { return Math.pow(smallSquareLength, 2) };
 
     // Number of squares which have their actualValues revealed at the start of the game.
-    var numberOfRevealedValues = 76;
+    // Set to a new value when newGame is invoked.
+    var numberOfRevealedValues;
 
 
 
@@ -28,7 +29,7 @@ var grid = (function() {
     var fragment = document.createDocumentFragment(),
         tableEl = document.querySelector('#sudokuContainer table');
 
-    for (var rowNum = 0, fullSideLength = Math.pow(smallSquareLength, 2); rowNum < fullSideLength; rowNum++) {
+    for (var rowNum = 0, fullSideLength = getSideLength(); rowNum < fullSideLength; rowNum++) {
 
         // Create row.
         gridArray.push([]);
@@ -135,12 +136,17 @@ var grid = (function() {
         } );
     };
 
-    // Set random squares to have their actualValues revealed at the start of a game, once all values are generated.
-    var setRevealedSquares = function() {
+    // Returns a random grid square.
+    var getRandomSquare = function() {
+        return gridArray[utils.randomInt(gridArray.length)][utils.randomInt(gridArray[0].length)];
+    };
+
+    // Set an amount of random squares to have their actualValues revealed. Squares must not have a user value.
+    var revealRandomSquares = function(amount) {
         var revealedSquares = 0;
-        while (revealedSquares < numberOfRevealedValues) {
-            var randomSquare = gridArray[utils.randomInt(gridArray.length)][utils.randomInt(gridArray[0].length)];
-            if (!randomSquare.getRevealedStatus()) {
+        while (revealedSquares < amount) {
+            var randomSquare = getRandomSquare();
+            if (!randomSquare.getRevealedStatus() && !randomSquare.hasUserValue()) {
                 randomSquare.setAsRevealed();
                 revealedSquares++;
             }
@@ -149,10 +155,11 @@ var grid = (function() {
 
     // Invoked at the start of a new game. Invokes reset() on every grid square, removing the old values.
     // Then generates new values for the grid squares, and sets random grid squares to be revealed.
-    var newGame = function() {
+    var newGame = function(revealedValues) {
+        numberOfRevealedValues = revealedValues;
         allSquares( function(el) { el.reset(); } );
         generateValues();
-        setRevealedSquares();
+        revealRandomSquares(numberOfRevealedValues);
     };
 
     // Resets the userValue on squares which have a userValue, where the userValue does not equal the actualValue.
@@ -170,12 +177,10 @@ var grid = (function() {
         for (var i = 0, sideLength = getSideLength(); i < sideLength; i++ ) {
             for (var j = 0; j < sideLength; j++) {
                 if (!gridArray[i][j].getRevealedStatus() && !gridArray[i][j].hasCorrectUserValue()) {
-                    console.log('checkForWin() returns false');
                     return false;
                 }
             }
         }
-        console.log('checkForWin() returns true');
         gameController.gameWon();
     };
 
