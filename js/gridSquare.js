@@ -22,7 +22,7 @@ var createGridSquare = function(trObject) {
     // Generate the 'no value' option element that must appear at the start of each menu.
     // Needs to be visible at the start of the game, before any new menu is generated on hover.
     var firstOption = document.createElement('option');
-    firstOption.textContent = 'Remove Value';
+    firstOption.textContent = 'None';
     firstOption.value = '';
     selectMenuObject.appendChild(firstOption);
 
@@ -130,6 +130,12 @@ var createGridSquare = function(trObject) {
         spanObject.textContent = actualValue;
     };
 
+    var setAsNotRevealed = function() {
+        isRevealedValue = false;
+        tdObject.classList.remove('revealed');
+        spanObject.textContent = '';
+    };
+
     // >> End revealed square.
 
 
@@ -221,8 +227,10 @@ var createGridSquare = function(trObject) {
 
     // Reset values before the start of a new game, as generating new values needs old ones to be removed first.
     var reset = function() {
-        actualValue = userValue = null;
-        isRevealedValue = false;
+        console.log('reset() invoked');
+        actualValue = null;
+        userValue = null;
+        setAsNotRevealed();
     };
 
     return {

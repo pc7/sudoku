@@ -7,8 +7,8 @@ html {
 }
 
 #sudokuContainer td {
-  width: 1rem;
-  height: 1rem;
+  width: 4.5rem;
+  height: 4.5rem;
   border: 1px solid #ccc;
 }
 
@@ -31,7 +31,35 @@ html {
 #sudokuContainer tr:nth-of-type(1) {
   border-top: 2px solid #000;
 }
-
-#sudokuContainer td.revealed select {
+/*
+#sudokuContainer td.revealed select,
+#sudokuContainer td:not(.revealed):not(:hover) select {
   display: none;
+}
+*/
+
+#sudokuContainer select {
+  width: 3.5rem;
+}
+
+#sudokuContainer td select,
+.gameWon select {
+  display: none;
+}
+
+#sudokuContainer td:not(.revealed):hover select,
+#sudokuContainer td:not(.revealed) select:focus {
+  display: inline;
+}
+
+#sudokuContainer:not(.gameWon) #gameWonSpan {
+  display: none;
+}
+
+.revealed {
+  background-color: #e7e7e7;
+}
+
+.gameWon td:not(.revealed) {
+  background-color: #bdedff;
 }

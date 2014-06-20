@@ -164,7 +164,7 @@ var grid = (function() {
         } );
     };
 
-    // Returns true if game won, ie all userValues equal the actualValues on non-revealed squares.
+    // Game won if all userValues equal the actualValues on non-revealed squares.
     // Can abandon search when incorrect value found, so more efficient to use loops rather than allSquares().
     var checkForWin = function() {
         for (var i = 0, sideLength = getSideLength(); i < sideLength; i++ ) {
@@ -176,7 +176,7 @@ var grid = (function() {
             }
         }
         console.log('checkForWin() returns true');
-        return true;
+        gameController.gameWon();
     };
 
     return {
