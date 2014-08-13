@@ -1,4 +1,5 @@
 /*
+ * Written by P Cope.
  * Generates a grid square object, and an associated DOM td object. The DOM object is appended to the argument tr object.
  */
 
@@ -220,7 +221,13 @@ var createGridSquare = function(trObject) {
     };
 
     // Generate new menu options every time the user focuses the select menu.
-    selectMenuObject.addEventListener('focus', generateMenuOptions, false);
+    // On IE11, the options are displayed before the 'focus' event fires, meaning the user must click three times
+    // if the 'focus' event is used. The 'click' and 'focusin' events do the same on IE11.
+    // The 'mouseover' event fires every time one of the option elements is moused over in Firefox.
+    // 'mouseenter' doesn't do this on Firefox.
+    // The 'focus' event has been replaced by 'mouseenter', which works on IE11 but is often fired unnecessarily.
+    // Change the event from 'mouseenter' to 'focus' if this no longer causes problems in IE.
+    selectMenuObject.addEventListener('mouseenter', generateMenuOptions, false);
 
     // >> End user value.
 

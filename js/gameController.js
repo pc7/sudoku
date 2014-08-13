@@ -1,4 +1,5 @@
 /*
+ * Written by P Cope.
  * Controller for the game buttons.
  */
 

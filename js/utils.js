@@ -1,3 +1,5 @@
+// Written by P Cope.
+
 var utils = {
 
     // Takes two arrays as arguments.

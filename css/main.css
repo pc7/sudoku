@@ -40,8 +40,7 @@ html {
 
 #sudokuContainer td select,
 #sudokuContainer:not(.gameWon) td:not(.revealed):hover span,
-#sudokuContainer select:focus + span,
-.gameWon #removeIncorrectValuesButton {
+#sudokuContainer select:focus + span {
   display: none;
 }
 

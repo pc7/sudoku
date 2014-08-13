@@ -1,4 +1,5 @@
 /*
+ * Written by P Cope.
  * Grid is a two-dimensional array containing grid square objects.
  * Parallel to this is a DOM table object, with each grid square having an associated td object.
  */
@@ -49,7 +50,7 @@ var grid = (function() {
     tableEl.appendChild(fragment);
 
 
-    // Get shiared squares for each grid square, once all grid squares generated.
+    // Get shared squares for each grid square, once all grid squares generated.
     for (var rowNum = 0, fullSideLength = getSideLength(); rowNum < fullSideLength; rowNum++) {
 
         for (var colNum = 0; colNum < fullSideLength; colNum++) {
