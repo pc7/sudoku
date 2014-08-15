@@ -1,4 +1,4 @@
-// Written by P Cope.
+// Copyright (c) P Cope 2014.
 
 var utils = {
 

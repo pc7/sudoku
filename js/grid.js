@@ -1,5 +1,5 @@
 /*
- * Written by P Cope.
+ * Copyright (c) P Cope 2014.
  * Grid is a two-dimensional array containing grid square objects.
  * Parallel to this is a DOM table object, with each grid square having an associated td object.
  */

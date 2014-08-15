@@ -1,5 +1,5 @@
 /*
- * Written by P Cope.
+ * Copyright (c) P Cope 2014.
  * Controller for the game buttons.
  */
 

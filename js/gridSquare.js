@@ -1,5 +1,5 @@
 /*
- * Written by P Cope.
+ * Copyright (c) P Cope 2014.
  * Generates a grid square object, and an associated DOM td object. The DOM object is appended to the argument tr object.
  */
 
